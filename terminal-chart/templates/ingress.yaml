@@ -1,7 +1,6 @@
 {{- if .Values.ingress.enabled -}}
 {{- $fullName := include "terminal.fullname" . -}}
 {{- $svcPort := .Values.service.port -}}
-{{- $hostnamePrefix := include "terminal.hostnameprefix" .}}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -18,14 +17,14 @@ spec:
   {{- range .Values.ingress.tls }}
     - hosts:
       {{- range .hosts }}
-        - {{ printf "%s.%s" $hostnamePrefix . | quote }}
+        - {{ . | quote }}
       {{- end }}
-      secretName: {{ $hostnamePrefix }}-{{ .secretName }}
+      secretName: {{ .secretName }}
   {{- end }}
 {{- end }}
   rules:
   {{- range .Values.ingress.hosts }}
-    - host: {{ printf "%s.%s" $hostnamePrefix .host | quote }}
+    - host: {{ .host | quote }}
       http:
         paths:
         {{- range .paths }}

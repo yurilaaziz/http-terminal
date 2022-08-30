@@ -33,10 +33,6 @@ Create chart name and version as used by the chart label.
 {{- end -}}
 
 
-{{- define "terminal.hostnameprefix" -}}
-{{- $fullName := include "terminal.fullname" . -}}
-{{- printf "%s-%s-%s" $fullName .Values.task .Values.user -}}
-{{- end -}}
 {{/*
 Common labels
 */}}
